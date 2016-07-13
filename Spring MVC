@@ -1,0 +1,67 @@
+Spring MVC：是什么
+
+Spring框架提供的用于构建web应用程序的MVC框架
+
+为什么要使用Spring MVC：
+
+Spring MVC是什么：
+Spring框架所提供的开源的MVC框架
+
+Struts2的革新：
+革新：
+1：在action中彻底杜绝使用HttpServletRequest和HttpServletResponse这样的Servlet原生对象
+2：将请求参数和响应数据都从相应方法中剥离出来成为action中的属性变量
+
+AOP(面向切面)与IOC(控制反转):
+AOP:Aspect Oriented Programming 面向切面编程
+利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率
+
+IOC:Inversion of Control 控制反转/依赖注入
+Spring框架使用依赖注入的方式来管理对象之间的依赖关系
+
+当某个java对象（调用者）需要调用另一个java对象（被依赖对象）的方法时，传统的方式有两种：
+1：原始做法：调用者主动创建被依赖对象，然后再调用被依赖对象的方法
+2：简单工厂模式：调用者先找到被依赖对象的工厂，然后主动通过工厂去获取被依赖对象，然后再调用被依赖对象的方法
+
+对于第一种方式，由于调用者需要形如“new 被依赖对象构造器（）”的代码创建对象，因此会导致调用者和被依赖对象实现类的硬编码耦合
+而在第二种方式中，调用者通过工厂来获取被依赖对象，工厂负责被依赖对象的创建，因而调用者面向被依赖对象的接口编程，这种方式虽然避免了类层次的硬编码耦合，
+但是调用者需要主动通过工厂去获取被依赖对象，这会带来调用者和被依赖对象工厂的耦合
+
+使用了Spring框架之后，调用者无需主动获取被依赖对象，只需要被动接受Spring容器提供的被依赖对象的实例，因此被称为控制反转
+
+Spring容器：
+Spring容器是生成Bean实例的工厂，并管理容器中的Bean。
+Spring中的Bean和JavaBean的概念并不相同，Spring中Bean是非常广义的概念，任何的java对象和java组件都可以被当成Bean处理。
+
+配置文件中Bean的声明：
+<Bean id="mouth" class="net.cn.impl.MouthImpl">
+</Bean>
+
+<Bean id="person" class="net.cn.impl.PersonImpl">
+	<Property name="mouth" ref="mouth"/>
+</Bean>
+
+public interface Mouth{
+	public void sayHello();
+}
+
+public interface Person{
+	public void speak();
+}
+
+public class MouthImlp implements Mouth{
+	@Override
+	public void sayHello(){
+		System.out.println("Hello World");
+	}
+}
+
+public class PersonImpl implements Person{
+	private Mouth mouth;
+
+	@Override
+	public void speak(){
+		mouth.sayHello();
+	}
+}
+
